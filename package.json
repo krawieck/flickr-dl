@@ -1,0 +1,32 @@
+{
+  "name": "flickr-dl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "mz": "^2.7.0",
+    "node-fetch": "^2.2.0",
+    "puppeteer": "^1.9.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.5",
+    "@types/mz": "0.0.32",
+    "@types/node": "^10.11.7",
+    "@types/puppeteer": "^1.9.0",
+    "@types/request": "^2.47.1",
+    "eslint": "^5.7.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^23.6.0"
+  }
+}
