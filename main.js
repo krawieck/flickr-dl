@@ -37,9 +37,9 @@ examples: npm start -- https://www.flickr.com/photos/megane_wakui/
     (current, max, success) => {
       if (!success) failures++
       process.stdout.write(
-        `\r  Getting URLs from pages... ${Math.round(
-          (current / max) * 100
-        )}% done  (${current}/${max})${failures ? `. Failure happened ${failures} times` : ''}`
+        `\r  Getting URLs from pages... \
+${Math.round((current / max) * 100)}% done  (${current}/${max})\
+${failures ? `. Failure happened ${failures} times` : ''}`
       )
     },
     debug
@@ -77,6 +77,6 @@ ${
 })()
 
 function catchErrorAndGTFO (e) {
-  console.error(e)
+  console.error('\n', e)
   process.exit()
 }
