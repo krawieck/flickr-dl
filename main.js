@@ -6,17 +6,22 @@ const { getNumberOfPages, getUrlsFromPages, download, getPhoto } = require('./sr
     console.log(`
 gimmie url for flickr profile to download all of this person's photos
 
-          npm start -- <url>
+usage:    npm start -- <url>
           node main.js <url>
+
+optional parameters:
+          -o <path>       outputs images to <path>, default is "img/"
+          -d              turns on debug mode, which basically just turn puppeteer's headless mode off
 
 examples: npm start -- https://www.flickr.com/photos/megane_wakui/
           node main.js https://www.flickr.com/photos/megane_wakui/`)
     process.exit()
   }
-
+  // get all the variables
   const debug = !!argv.d
 
   const url = argv._[0]
+  const dir = argv.o || 'img/'
   // check if someone is a moron
   if (!url) {
     catchErrorAndGTFO('I need url to make something of it')
@@ -54,7 +59,7 @@ ${failures ? `. Failure happened ${failures} times` : ''}`
   for (let url of urls) {
     dlCount++
     await getPhoto(url)
-      .then(e => download(...e))
+      .then(e => download(...e, dir))
       .catch(e => {
         process.stderr.write('\n' + e + '\n')
         failedCount++

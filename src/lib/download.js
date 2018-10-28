@@ -2,12 +2,12 @@ const request = require('request')
 const fs = require('mz/fs')
 const path = require('path')
 
-const download = (uri, filename) =>
+const download = (uri, filename, dir) =>
   new Promise((resolve, reject) => {
     let suffix = 0
     let {
-      groups: { dir, name, ext }
-    } = /^(?<dir>.*?)(?<name>[^\\/]*)\.(?<ext>\w+)$/.exec(filename)
+      groups: { name, ext }
+    } = /(?<name>[^\\/]*)\.(?<ext>\w+)$/.exec(filename)
 
     // create dir if it doesn't exist
     if (!fs.existsSync(dir)) {

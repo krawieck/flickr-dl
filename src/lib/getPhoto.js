@@ -43,8 +43,5 @@ module.exports = async function getPhoto (url, debug = false) {
   let finalUrl = await page.evaluate(() => document.querySelector('#allsizes-photo > img').src)
 
   browser.close()
-  return [
-    finalUrl,
-    `img/${date.getFullYear()}-${pad(date.getMonth())}-${pad(date.getDate())}.jpg`
-  ]
+  return [finalUrl, `${date.getFullYear()}-${pad(date.getMonth())}-${pad(date.getDate())}.jpg`]
 }
