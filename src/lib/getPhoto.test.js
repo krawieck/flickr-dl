@@ -3,18 +3,21 @@ const getPhoto = require('./getPhoto')
 beforeEach(() => jest.setTimeout(600000))
 
 it('gets the png/jpg url and date right', async () => {
-  // const data = [
-  //   // TODO: MORE TESTS WITH MOCK DATA
-  // ]
-  const result = await getPhoto('https://www.flickr.com/photos/megane_wakui/44607625822/')
+  const mockData = [
+    [
+      'https://www.flickr.com/photos/megane_wakui/44607625822/',
+      ['https://c2.staticflickr.com/2/1873/44607625822_03cacf8532_k.jpg', '2018-07-18.jpg']
+    ] // TODO: MORE TESTS WITH MOCK DATA
+  ]
 
-  expect(result).toBeInstanceOf(Object)
-  expect(Object.keys(result).length).toEqual(2)
-  expect(result[0]).toEqual('https://c2.staticflickr.com/2/1873/44607625822_03cacf8532_k.jpg')
-  expect(result[1]).toEqual('2018-07-18.jpg')
+  for (const [input, output] of mockData) {
+    // console.log({ input, output })
+    const result = await getPhoto(input)
+    expect(result).toEqual(output)
+  }
 })
 
 it('knows when people try to fuck with it', async () => {
-  expect(getPhoto('aerrngaejrngowenjhnbdzfkndfvjknkgo')).resolves.toBeInstanceOf(Error)
-  expect(getPhoto('http://dnfkndf.com/qweqwe/1231232/')).resolves.toBeInstanceOf(Error)
+  expect(getPhoto('aerrngaejrngowenjhnbdzfkndfvjknkgo')).rejects.toBeInstanceOf(Error)
+  expect(getPhoto('http://dnfkndf.com/qweqwe/1231232/')).rejects.toBeInstanceOf(Error)
 })

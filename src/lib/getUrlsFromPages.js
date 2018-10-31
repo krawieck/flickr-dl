@@ -1,3 +1,4 @@
+const URL = require('url')
 const getUrlsFromPage = require('./getUrlsFromPage.js')
 
 module.exports = async function getUrlsFromPages (
@@ -15,7 +16,7 @@ module.exports = async function getUrlsFromPages (
   // iterating over pages
   for await (const num of iterator) {
     let success = false
-    const tempUrls = await getUrlsFromPage(`${url}/page${num}`, debug)
+    const tempUrls = await getUrlsFromPage(URL.resolve(url, `/page${num}`), debug)
     if (tempUrls instanceof Array && tempUrls.length !== 0) {
       urls.push(tempUrls)
       success = true

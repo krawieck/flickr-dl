@@ -23,16 +23,16 @@ module.exports = async function getUrlsFromPage (url, debug = false) {
   )
 
   await page.goto(url).catch(e => Promise.reject(e))
-  await page.waitForSelector(
-    '.photo-display-item > .hover-target > .thumb > .photo_container > .photo-click'
-  )
+  await page.waitForSelector('.photo-list-photo-interaction > a')
   const data = await page.evaluate(() => {
-    return Array.from(
-      document.querySelectorAll(
-        '.photo-display-item > .hover-target > .thumb > .photo_container > .photo-click'
-      )
-    ).map(e => e.href)
-    // return Array.from(document.querySelectorAll('.overlay')).map(e => e.href) // if something fucks up, try this
+    return Array.from(document.querySelectorAll('.photo-list-photo-interaction > a')).map(
+      e => e.href
+    )
+    // return Array.from(
+    //   document.querySelectorAll(
+    //     '.photo-display-item > .hover-target > .thumb > .photo_container > .photo-click'
+    //   )
+    // ).map(e => e.href) // if something fucks up, try this
   })
 
   browser.close()

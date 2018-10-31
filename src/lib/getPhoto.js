@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer')
 const blockRequests = require('./blockRequests')
 const { pad } = require('./util')
+const URL = require('url')
 
 module.exports = async function getPhoto (url, debug = false) {
   if (!/^https:\/\/www\.flickr\.com\/photos\/[^\s\\/]+\/\d+\/?$/.test(url)) {
@@ -10,6 +11,7 @@ module.exports = async function getPhoto (url, debug = false) {
   const browser = await puppeteer
     .launch({
       headless: !debug
+      // headless: false
     })
     .catch(Promise.reject)
   const page = await browser.newPage().catch(Promise.reject)
@@ -38,7 +40,7 @@ module.exports = async function getPhoto (url, debug = false) {
   const date = new Date(
     await page.evaluate(() => document.querySelector('.date-taken-label').innerText.slice(9))
   )
-  await page.goto(`${url}/sizes/k/`) // goto best quality
+  await page.goto(URL.resolve(url, 'sizes/k/'))
   // page.waitForSelector('#allsizes-photo > img')
   let finalUrl = await page.evaluate(() => document.querySelector('#allsizes-photo > img').src)
 
