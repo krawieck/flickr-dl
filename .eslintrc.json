@@ -6,6 +6,7 @@
     "jest": true
   },
   "rules": {
-    "no-continue": "off"
+    "no-continue": "off",
+    "comma-dangle": ["error", "only-multiline"]
   }
 }
