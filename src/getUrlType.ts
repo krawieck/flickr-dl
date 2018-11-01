@@ -1,6 +1,6 @@
-const fixUrl = require('./fixUrl')
+import fixUrl from './fixUrl'
 
-module.exports = url => {
+module.exports = (url: string): string | undefined => {
   url = fixUrl(url)
   for (const [type, regex] of Object.entries(regexes)) {
     if (regex.test(url)) {

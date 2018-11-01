@@ -8,8 +8,8 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}\\main.js",
-      "args": ["https://www.flickr.com/photos/megane_wakui/", "-d", "-f"],
+      "program": "${workspaceFolder}\\main.ts",
+      "args": ["https://www.flickr.com/photos/megane_wakui/"],
       "console": "integratedTerminal"
     },
     {

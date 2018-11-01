@@ -1,4 +1,4 @@
-const fixUrl = require('./fixUrl')
+import fixUrl from './fixUrl'
 
 test('fixes the darn urls', () => {
   const mockData = [

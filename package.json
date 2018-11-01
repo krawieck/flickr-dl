@@ -4,8 +4,9 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "lint": "eslint src/**",
     "test": "jest",
-    "start": "node main.js"
+    "start": "ts-node main.ts"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +14,8 @@
     "minimist": "^1.2.0",
     "mz": "^2.7.0",
     "node-fetch": "^2.2.0",
-    "puppeteer": "^1.9.0"
+    "puppeteer": "^1.9.0",
+    "ts-node": "^7.0.1"
   },
   "devDependencies": {
     "@types/jest": "^23.3.5",
@@ -27,6 +29,8 @@
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.4",
+    "typescript": "^3.1.5"
   }
 }
