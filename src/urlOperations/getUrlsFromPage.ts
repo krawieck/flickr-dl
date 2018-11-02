@@ -1,5 +1,5 @@
 import * as puppeteer from 'puppeteer'
-import blockRequests from './blockRequests'
+import blockRequests from '../blockRequests'
 
 export default async function getUrlsFromPage(
   url: string,

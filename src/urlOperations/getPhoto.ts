@@ -1,6 +1,6 @@
 import * as puppeteer from 'puppeteer'
-import blockRequests from './blockRequests'
-import { pad } from './util'
+import blockRequests from '../blockRequests'
+import { pad } from '../util'
 import * as URL from 'url'
 
 export default async function getPhoto(
