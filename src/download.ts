@@ -4,7 +4,7 @@ import * as path from 'path'
 
 export default (uri: string, filename: string, dir: string): Promise<void> =>
   new Promise((resolve, reject) => {
-    if (typeof uri !== 'string' || typeof filename !== 'string' || dir !== 'string')
+    if (typeof uri !== 'string' || typeof filename !== 'string' || typeof dir !== 'string')
       reject(new TypeError('invalid arguments'))
     let suffix = 0
     let { groups } = /(?<name>[^\\/]*)\.(?<ext>\w+)$/.exec(filename) as RegExpExecArray
