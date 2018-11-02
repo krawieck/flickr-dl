@@ -2,7 +2,7 @@
 
 Tool for bulk downloading images from flickr.com
 
-Right now it only supports downloading from whole user library
+Right now it only supports downloading from user's photostream
 
 ## TODO
 
