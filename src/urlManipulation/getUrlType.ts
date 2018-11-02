@@ -1,6 +1,11 @@
 import fixUrl from './fixUrl'
 
-module.exports = (url: string): string | undefined => {
+/**
+ * Finds out what type of url is it
+ *
+ * Possible types are: "profile", "photo", "album", "albumList" and "favorites".
+ */
+const getUrlType = (url: string): string | undefined => {
   url = fixUrl(url)
   for (const [type, regex] of Object.entries(regexes)) {
     if (regex.test(url)) {
@@ -18,12 +23,12 @@ const regexes = {
   favorites: /^https:\/\/www.flickr.com\/photos\/[^\\/\s]+\/favorites\/?$/,
 }
 
-/*
+export default getUrlType
 
+/*
 profile
 photo
 album
 albumList
 favorites
-
 */

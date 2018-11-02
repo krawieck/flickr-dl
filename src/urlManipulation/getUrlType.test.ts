@@ -1,4 +1,4 @@
-const getUrlType = require('./getUrlType')
+import getUrlType from './getUrlType'
 
 it('assignes the type correctly for basic situations', () => {
   const mockData = [

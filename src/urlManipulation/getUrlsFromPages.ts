@@ -6,7 +6,7 @@ export default async function getUrlsFromPages(
   numberOfPages: number,
   progressCallback: (progress: number, numberOfPages: number, success: boolean) => void = () => {},
   debug = false,
-) {
+): Promise<string[]> {
   // weird setup for iterator
   let iterator = Array(numberOfPages)
     .fill(undefined)

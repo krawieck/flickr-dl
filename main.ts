@@ -1,8 +1,8 @@
 // import { getNumberOfPages, getUrlsFromPages, download, getPhoto } from ''
 
-import getNumberOfPages from './src/urlOperations/getNumberOfPages'
-import getUrlsFromPages from './src/urlOperations/getUrlsFromPages'
-import getPhoto from './src/urlOperations/getPhoto'
+import getNumberOfPages from './src/urlManipulation/getNumberOfPages'
+import getUrlsFromPages from './src/urlManipulation/getUrlsFromPages'
+import getPhoto from './src/urlManipulation/getPhoto'
 import download from './src/download'
 
 const argv = require('minimist')(process.argv.slice(2))

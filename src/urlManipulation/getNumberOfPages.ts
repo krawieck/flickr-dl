@@ -26,7 +26,7 @@ export default async function getNumberOfPages(url: string, debug = false): Prom
   await page.goto(url, { timeout: 0 }).catch(gtfo)
 
   await page.waitForSelector('.view.pagination-view.photostream').catch(gtfo)
-  const result = await page
+  const result: number = await page
     .evaluate(() =>
       Number(
         (Array.from(
