@@ -2,8 +2,11 @@ import getNumberOfPages from './src/urlManipulation/getNumberOfPages'
 import getUrlsFromPages from './src/urlManipulation/getUrlsFromPages'
 import getUrlType from './src/urlManipulation/getUrlType'
 import getPhoto from './src/urlManipulation/getPhoto'
-import download from './src/download'
-
+import downloadPhoto from './src/downloadPhoto'
+import catchErrorAndGTFO from './src/catchErrorAndGTFO'
+import getNumberOfPagesCLI from './src/CLI/getNumberOfPagesCLI'
+import downloadPhotosCLI from './src/CLI/downloadPhotosCLI'
+import getUrlsFromPagesCLI from './src/CLI/getUrlsFromPagesCLI'
 const argv = require('minimist')(process.argv.slice(2))
 ;(async () => {
   // handle help
@@ -62,73 +65,3 @@ examples: npm start -- https://www.flickr.com/photos/megane_wakui/`)
     }
   }
 })()
-
-function catchErrorAndGTFO(...e: any): never {
-  console.error('\n', ...e)
-  return process.exit()
-}
-
-async function downloadPhotosCLI(
-  urls: string[],
-  dir: string,
-  debug: boolean = false
-): Promise<void> {
-  let dlCount = 0
-  let failedCount = 0
-  process.stdout.write('  Downloading photos...')
-  for (const url of urls) {
-    dlCount++
-    await getPhoto(url)
-      .then(e => download(e[0], e[1], dir)) // @TODO FIND OUT HOW TO REPLACE THAT WITH SPREAD OPERATOR WITHOUT TYPESCRIPT FUCKING FLIPPING OUT
-      .catch(e => {
-        process.stderr.write('\n' + e + '\n')
-        failedCount++
-      })
-    process.stdout.write(
-      `\r  Downloading photos... \
-${(Math.round((dlCount / urls.length) * 10000) / 100).toFixed(2).padStart(6, ' ')}% done  \
-(${dlCount}/${urls.length})\
-${
-        failedCount
-          ? `. ${(Math.round((failedCount / dlCount) * 10000) / 100)
-              .toFixed(2)
-              .padStart(6, ' ')}% failed`
-          : ''
-      }`
-    )
-  }
-  process.stdout.write(`\r✔ Downloading photos... 100.00% done!\n`)
-}
-
-async function getUrlsFromPagesCLI(
-  url: string,
-  numberOfPages: number,
-  debug: boolean = false
-): Promise<string[]> {
-  process.stdout.write('  Getting URLs from pages...')
-  let failures = 0
-
-  const urls: string[] = await getUrlsFromPages(
-    url,
-    numberOfPages,
-    (current, max, success) => {
-      if (!success) failures++
-      process.stdout.write(
-        `\r  Getting URLs from pages... ${Math.round(
-          (current / max) * 100
-        )}% done  (${current}/${max})${failures ? `. Failure happened ${failures} times` : ''}`
-      )
-    },
-    debug
-  ).catch(catchErrorAndGTFO)
-
-  process.stdout.write('\r✔ Getting URLS from pages... 100% done!\n')
-  return urls
-}
-
-async function getNumberOfPagesCLI(url: string, debug: boolean = false): Promise<number> {
-  process.stdout.write('  Getting number of pages...')
-  const numberOfPages: number = await getNumberOfPages(url, debug).catch(catchErrorAndGTFO)
-  process.stdout.write('\r✔ Getting number of pages... Done!\n')
-  return numberOfPages
-}

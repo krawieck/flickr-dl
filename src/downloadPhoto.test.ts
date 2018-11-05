@@ -1,4 +1,4 @@
-import download from './download'
+import downloadPhoto from './downloadPhoto'
 import * as fs from 'mz/fs'
 import * as path from 'path'
 import * as crypto from 'crypto'
@@ -8,7 +8,7 @@ const randomName = () => crypto.createHmac('sha256', new Date().toISOString()).d
 describe('`download` function', async () => {
   it('downloads without making directory', async () => {
     const name = randomName() + '.jpg'
-    await download('https://c2.staticflickr.com/2/1873/44607625822_03cacf8532_k.jpg', name, '')
+    await downloadPhoto('https://c2.staticflickr.com/2/1873/44607625822_03cacf8532_k.jpg', name, '')
     expect(fs.existsSync(name)).toBe(true)
     await fs.unlink(path.join(name))
   })
