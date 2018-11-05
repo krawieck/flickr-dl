@@ -10,7 +10,7 @@ import getUrlsFromPagesCLI from './src/CLI/getUrlsFromPagesCLI'
 const argv = require('minimist')(process.argv.slice(2))
 ;(async () => {
   // handle help
-  if (argv['?'] || argv.h) {
+  if (argv['?'] || argv.h || argv.help) {
     console.log(`
 gimmie url for flickr profile to download all of this person's photos
 
@@ -19,25 +19,26 @@ usage:    npm start -- <url>
  (warning: <url> has to start with "https://") 
 
 optional parameters:
-          -o <path>       outputs images to <path>, default is "img/"
-          -d              turns on debug mode, which basically just turn puppeteer's headless mode off
+          --output  | -o <path>       outputs images to <path>, default is "img/"
+          --debug   | -d              turns on debug mode, which basically just turn puppeteer's headless mode off
+          --verbose | -v              spits out many a lot of information, which is pretty helpful while debugging 
 
 examples: npm start -- https://www.flickr.com/photos/megane_wakui/`)
     process.exit()
   }
   // get all the variables
-  const debug = !!argv.d
+  const debug = !!argv.debug || !!argv.d
+  const verbose = !!argv.verbose || !!argv.v
 
   const url = argv._[0]
-  const dir = argv.o || 'img/'
+  const dir = argv.output || argv.o || 'img/'
   // check if someone is a moron
   if (!url) {
     catchErrorAndGTFO('I need url to make something of it')
   }
-  console.log({ url })
 
   const typeOfUrl = getUrlType(url)
-  console.log({ typeOfUrl })
+  if (verbose) console.log({ url, typeOfUrl, dir, argv })
 
   switch (typeOfUrl) {
     case 'photostream' || 'favorites': {
