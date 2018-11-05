@@ -16,11 +16,11 @@ const getUrlType = (url: string): string | undefined => {
 }
 
 const regexes = {
-  photostream: /^https:\/\/www.flickr.com\/photos\/[^\\/\s]+\/?$/,
-  photo: /^https:\/\/www.flickr.com\/photos\/[^\\/\s]+\/\d+\/?$/,
-  album: /^https:\/\/www.flickr.com\/photos\/[^\\/\s]+\/albums\/\d+\/?$/,
-  albumList: /^https:\/\/www.flickr.com\/photos\/[^\\/\s]+\/albums\/?$/,
-  favorites: /^https:\/\/www.flickr.com\/photos\/[^\\/\s]+\/favorites\/?$/,
+  photostream: /^https:\/\/(?:www\.)?flickr\.com\/photos\/[^\\/\s]+\/?$/,
+  photo: /^https:\/\/(?:www\.)?flickr\.com\/photos\/[^\\/\s]+\/\d+\/?$/,
+  album: /^https:\/\/(?:www\.)?flickr\.com\/photos\/[^\\/\s]+\/albums\/\d+\/?$/,
+  albumList: /^https:\/\/(?:www\.)?flickr\.com\/photos\/[^\\/\s]+\/albums\/?$/,
+  favorites: /^https:\/\/(?:www\.)?flickr\.com\/photos\/[^\\/\s]+\/favorites\/?$/,
 }
 
 export default getUrlType

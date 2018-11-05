@@ -31,6 +31,19 @@ it('implements `fixUrl` properly', () => {
   })
 })
 
+it('implements `fixUrl` properly', () => {
+  const mockData = [
+    ['https://www.flickr.com/photos/dtt67/45588983952/in/explore-2018-10-30/', 'photo'],
+    ['https://www.flickr.com/photos/megane_wakui/with/44607621122/', 'photostream'],
+    ['https://flickr.com/photos/joebranco/44705179515/in/explore-2018-10-29/', 'photo'],
+    ['https://flickr.com/photos/dtt67/45588983952/in/explore-2018-10-30/', 'photo'],
+    ['https://flickr.com/photos/oldroger/27963939197/', 'photo'],
+  ]
+
+  mockData.forEach(([url, output]) => {
+    expect(getUrlType(url)).toEqual(output)
+  })
+})
 /*
 photostream
 photo
