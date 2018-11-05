@@ -7,7 +7,7 @@ export default async function getPhoto(
   url: string,
   debug: boolean = false,
 ): Promise<[string, string]> {
-  if (!/^https:\/\/www\.flickr\.com\/photos\/[^\s\\/]+\/\d+\/?$/.test(url)) {
+  if (!/^https:\/\/(www\.)?flickr\.com\/photos\/[^\s\\/]+\/\d+\/?$/.test(url)) {
     return Promise.reject(new Error("url doesn't match the scheme"))
   }
   const gtfo = (e: Error): Promise<never> => {
