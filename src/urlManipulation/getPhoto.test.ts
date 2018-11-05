@@ -8,6 +8,10 @@ it('gets the png/jpg url and date right', async () => {
       input: 'https://www.flickr.com/photos/megane_wakui/44607625822/',
       output: ['https://c2.staticflickr.com/2/1873/44607625822_03cacf8532_k.jpg', '2018-07-18.jpg'],
     }, // TODO: MORE TESTS WITH MOCK DATA
+    {
+      input: 'https://flickr.com/photos/megane_wakui/44607625822/',
+      output: ['https://c2.staticflickr.com/2/1873/44607625822_03cacf8532_k.jpg', '2018-07-18.jpg'],
+    },
   ]
 
   for (const { input, output } of mockData) {
