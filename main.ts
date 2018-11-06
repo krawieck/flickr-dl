@@ -49,6 +49,12 @@ examples: npm start -- https://www.flickr.com/photos/megane_wakui/`)
     }
 
     case 'photo': {
+      process.stdout.write('  Getting photo details... ')
+      const [uri, name] = await getPhoto(url, debug).catch(catchErrorAndGTFO)
+      process.stdout.write('\r✔ Getting photo details... Done!\n  Downloading... ')
+      downloadPhoto(uri, name, dir)
+        .catch(catchErrorAndGTFO)
+        .then(e => process.stdout.write('\r✔ Downloading... Done!\n'))
       break
     }
 
@@ -65,4 +71,4 @@ examples: npm start -- https://www.flickr.com/photos/megane_wakui/`)
       break
     }
   }
-})()
+})().catch(e => catchErrorAndGTFO('THE WHOLE APP FAILED', e))
