@@ -5,20 +5,17 @@ import * as URL from 'url'
 
 export default async function getPhoto(
   url: string,
-  debug: boolean = false,
+  debug: boolean = false
 ): Promise<[string, string]> {
   if (!/^https:\/\/(www\.)?flickr\.com\/photos\/[^\s\\/]+\/\d+\/?$/.test(url)) {
     return Promise.reject(new Error("url doesn't match the scheme"))
-  }
-  const gtfo = (e: Error): Promise<never> => {
-    browser.close()
-    return Promise.reject(e)
   }
   const browser: puppeteer.Browser = await puppeteer
     .launch({
       headless: !debug,
     })
     .catch(Promise.reject)
+
   const page: puppeteer.Page = await browser.newPage().catch(gtfo)
 
   blockRequests(
@@ -34,7 +31,7 @@ export default async function getPhoto(
     'xhr',
     'fetch',
     'eventsource',
-    'websocket',
+    'websocket'
   )
 
   await page
@@ -47,9 +44,9 @@ export default async function getPhoto(
   const date = new Date(
     await page
       .evaluate(() =>
-        (document.querySelector('.date-taken-label') as HTMLElement).innerText.slice(9),
+        (document.querySelector('.date-taken-label') as HTMLElement).innerText.slice(9)
       )
-      .catch(gtfo),
+      .catch(gtfo)
   )
   await page.goto(URL.resolve(url, 'sizes/k/')).catch(gtfo)
   // page.waitForSelector('#allsizes-photo > img')
@@ -57,6 +54,10 @@ export default async function getPhoto(
     .evaluate(() => (document.querySelector('#allsizes-photo > img') as HTMLImageElement).src)
     .catch(gtfo)
 
-  browser.close()
+  function gtfo(e: Error): Promise<never> {
+    browser.close()
+    return Promise.reject(e)
+  }
+  await browser.close()
   return [finalUrl, `${date.getFullYear()}-${pad(date.getMonth())}-${pad(date.getDate())}.jpg`]
 }
