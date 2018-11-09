@@ -7,6 +7,7 @@ import catchErrorAndGTFO from './src/catchErrorAndGTFO'
 import getNumberOfPagesCLI from './src/CLI/getNumberOfPagesCLI'
 import downloadPhotosCLI from './src/CLI/downloadPhotosCLI'
 import getUrlsFromPagesCLI from './src/CLI/getUrlsFromPagesCLI'
+import getWaterfallPhotosCLI from './src/CLI/getWaterfallUrlsCLI'
 const argv = require('minimist')(process.argv.slice(2))
 ;(async () => {
   // handle help
@@ -54,11 +55,14 @@ examples: npm start -- https://www.flickr.com/photos/megane_wakui/`)
       process.stdout.write('\r✔ Getting photo details... Done!\n  Downloading... ')
       downloadPhoto(uri, name, dir)
         .catch(catchErrorAndGTFO)
-        .then(e => process.stdout.write('\r✔ Downloading... Done!\n'))
+        .then(() => process.stdout.write('\r✔ Downloading... Done!\n'))
       break
     }
 
     case 'album': {
+      const urls = await getWaterfallPhotosCLI(url).catch(catchErrorAndGTFO)
+      await downloadPhotosCLI(urls, dir, debug)
+      console.log("seems like it's all done \\o/")
       break
     }
 
