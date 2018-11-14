@@ -1,7 +1,7 @@
 import * as puppeteer from 'puppeteer'
 import blockRequests from '../blockRequests'
 import { pad } from '../util'
-import * as URL from 'url'
+import * as urlJoin from 'url-join'
 
 export default async function getPhoto(
   url: string,
@@ -48,7 +48,7 @@ export default async function getPhoto(
       )
       .catch(gtfo)
   )
-  await page.goto(URL.resolve(url, 'sizes/k/')).catch(gtfo)
+  await page.goto(urlJoin(url, 'sizes/k/')).catch(gtfo)
   // page.waitForSelector('#allsizes-photo > img')
   const finalUrl = await page
     .evaluate(() => (document.querySelector('#allsizes-photo > img') as HTMLImageElement).src)

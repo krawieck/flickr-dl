@@ -1,11 +1,12 @@
 import * as URL from 'url'
 import getUrlsFromPage from './getUrlsFromPage'
+import * as urlJoin from 'url-join'
 
 export default async function getUrlsFromPages(
   url: string,
   numberOfPages: number,
   progressCallback: (progress: number, numberOfPages: number, success: boolean) => void = () => {},
-  debug = false,
+  debug = false
 ): Promise<string[]> {
   // weird setup for iterator
   let iterator = Array(numberOfPages)
@@ -16,7 +17,7 @@ export default async function getUrlsFromPages(
   // iterating over pages
   for await (const num of iterator) {
     let success = false
-    const tempUrls = await getUrlsFromPage(URL.resolve(url, `page${num}`), debug)
+    const tempUrls = await getUrlsFromPage(urlJoin(url, `page${num}`), debug)
     if (tempUrls instanceof Array && tempUrls.length !== 0) {
       urls.push(tempUrls)
       success = true
