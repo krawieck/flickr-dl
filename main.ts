@@ -8,6 +8,9 @@ import getNumberOfPagesCLI from './src/CLI/getNumberOfPagesCLI'
 import downloadPhotosCLI from './src/CLI/downloadPhotosCLI'
 import getUrlsFromPagesCLI from './src/CLI/getUrlsFromPagesCLI'
 import getWaterfallPhotosCLI from './src/CLI/getWaterfallUrlsCLI'
+import getAlbumList from './src/urlManipulation/getAlbumList'
+import getWaterfallUrls from './src/urlManipulation/getWaterfallUrls'
+import fixUrl from './src/urlManipulation/fixUrl'
 const argv = require('minimist')(process.argv.slice(2))
 ;(async () => {
   // handle help
@@ -31,13 +34,13 @@ examples: npm start -- https://www.flickr.com/photos/megane_wakui/`)
   const debug = !!argv.debug || !!argv.d
   const verbose = !!argv.verbose || !!argv.v
 
-  const url = argv._[0]
+  const baseUrl = argv._[0]
   const dir = argv.output || argv.o || 'img/'
   // check if someone is a moron
-  if (!url) {
+  if (!baseUrl) {
     catchErrorAndGTFO('I need url to make something of it')
   }
-
+  const url = fixUrl(baseUrl)
   const typeOfUrl = getUrlType(url)
   if (verbose) console.log({ url, typeOfUrl, dir, argv })
 
@@ -61,12 +64,24 @@ examples: npm start -- https://www.flickr.com/photos/megane_wakui/`)
 
     case 'album': {
       const urls = await getWaterfallPhotosCLI(url).catch(catchErrorAndGTFO)
-      await downloadPhotosCLI(urls, dir, debug)
+      await downloadPhotosCLI(urls, dir, debug).catch(catchErrorAndGTFO)
       console.log("seems like it's all done \\o/")
       break
     }
 
     case 'albumList': {
+      process.stdout.write('  Getting album list... ')
+      const urls: string[] = await getAlbumList(url).catch(catchErrorAndGTFO)
+      process.stdout.write('\r✔ Getting album list... Done!\n')
+
+      process.stdout.write('  Getting photos from albums... ')
+      for (const [i, el] of Object.entries(urls)) {
+        await getWaterfallUrls(el)
+        process.stdout.write(
+          `  Getting photos from albums... \
+${String(Math.round(Number(i) / urls.length)).padStart(3)}%`
+        )
+      }
       break
     }
 
