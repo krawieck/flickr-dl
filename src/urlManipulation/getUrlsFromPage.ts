@@ -3,7 +3,7 @@ import blockRequests from '../blockRequests'
 
 export default async function getUrlsFromPage(
   url: string,
-  debug: boolean = false,
+  debug: boolean = false
 ): Promise<string[]> {
   const browser = await puppeteer.launch({
     headless: !debug,
@@ -22,7 +22,7 @@ export default async function getUrlsFromPage(
     'xhr',
     'fetch',
     'eventsource',
-    'websocket',
+    'websocket'
   )
 
   await page.goto(url).catch(Promise.reject)
@@ -30,7 +30,7 @@ export default async function getUrlsFromPage(
   const data: string[] = await page
     .evaluate(() => {
       return (Array.from(
-        document.querySelectorAll('.photo-list-photo-interaction > a'),
+        document.querySelectorAll('.photo-list-photo-interaction > a')
       ) as HTMLLinkElement[]).map(e => e.href)
       // return Array.from(
       //   document.querySelectorAll(
