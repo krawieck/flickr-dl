@@ -1,5 +1,4 @@
 import getUrlsFromPages from '../urlManipulation/getUrlsFromPages'
-import catchErrorAndGTFO from '../catchErrorAndGTFO'
 
 export default async function getUrlsFromPagesCLI(
   url: string,
@@ -21,7 +20,7 @@ export default async function getUrlsFromPagesCLI(
       )
     },
     debug
-  ).catch(catchErrorAndGTFO)
+  ).catch(Promise.reject)
 
   process.stdout.write('\r✔ Getting URLS from pages... 100% done!\n')
   return urls
