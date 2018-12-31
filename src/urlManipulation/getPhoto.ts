@@ -5,16 +5,20 @@ import * as urlJoin from 'url-join'
 
 export default async function getPhoto(
   url: string,
+  browser?: puppeteer.Browser,
   debug: boolean = false
 ): Promise<[string, string]> {
   if (!/^https:\/\/(www\.)?flickr\.com\/photos\/[^\s\\/]+\/\d+\/?$/.test(url)) {
     return Promise.reject(new Error("url doesn't match the scheme"))
   }
-  const browser: puppeteer.Browser = await puppeteer
-    .launch({
-      headless: !debug,
-    })
-    .catch(Promise.reject)
+  const browserWasPassed = !!browser
+  if (!browser) {
+    browser = await puppeteer
+      .launch({
+        headless: !debug,
+      })
+      .catch(Promise.reject)
+  }
 
   const page: puppeteer.Page = await browser.newPage().catch(gtfo)
 
@@ -55,9 +59,18 @@ export default async function getPhoto(
     .catch(gtfo)
 
   function gtfo(e: Error): Promise<never> {
-    browser.close()
+    page.close()
+    if (!browserWasPassed) {
+      browser!.close()
+    }
     return Promise.reject(e)
   }
-  await browser.close()
+
+  if (!browserWasPassed) {
+    await browser.close()
+  } else {
+    page.close()
+  }
+
   return [finalUrl, `${date.getFullYear()}-${pad(date.getMonth())}-${pad(date.getDate())}.jpg`]
 }

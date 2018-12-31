@@ -3,11 +3,15 @@ import blockRequests from '../blockRequests'
 
 export default async function getUrlsFromPage(
   url: string,
-  debug: boolean = false
+  debug: boolean = false,
+  browser?: puppeteer.Browser
 ): Promise<string[]> {
-  const browser = await puppeteer.launch({
-    headless: !debug,
-  })
+  const browserWasPassed = !!browser
+  if (!browser) {
+    browser = await puppeteer.launch({
+      headless: !debug,
+    })
+  }
   const page: puppeteer.Page = await browser.newPage().catch(Promise.reject)
   blockRequests(
     page,
@@ -40,6 +44,10 @@ export default async function getUrlsFromPage(
     })
     .catch(Promise.reject)
 
-  browser.close()
+  if (browserWasPassed) {
+    page.close()
+  } else {
+    browser.close()
+  }
   return data
 }

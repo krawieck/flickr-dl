@@ -1,5 +1,6 @@
 import getPhoto from '../urlManipulation/getPhoto'
 import downloadPhoto from '../downloadPhoto'
+import * as puppeteer from 'puppeteer'
 
 export default async function downloadPhotosCLI(
   urls: string[],
@@ -9,9 +10,10 @@ export default async function downloadPhotosCLI(
   let dlCount = 0
   let failedCount = 0
   process.stdout.write('  Downloading photos...')
+  const browser: puppeteer.Browser = await puppeteer.launch()
   for (const url of urls) {
     dlCount++
-    await getPhoto(url)
+    await getPhoto(url, browser)
       .then(e => downloadPhoto(e[0], e[1], dir)) // @TODO FIND OUT HOW TO REPLACE THAT WITH SPREAD OPERATOR WITHOUT TYPESCRIPT FUCKING FLIPPING OUT
       .catch(e => {
         process.stderr.write('\n' + e + '\n')
