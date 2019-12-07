@@ -19,9 +19,9 @@
     "url-join": "^4.0.0"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.5",
+    "@types/jest": "^23.3.14",
     "@types/mz": "0.0.32",
-    "@types/node": "^10.11.7",
+    "@types/node": "^10.17.6",
     "@types/puppeteer": "^1.9.0",
     "@types/request": "^2.47.1",
     "@types/url-join": "^0.8.2",
